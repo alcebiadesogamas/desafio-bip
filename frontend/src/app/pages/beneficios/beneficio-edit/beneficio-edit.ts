@@ -1,27 +1,30 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Beneficio } from '../../../core/models/beneficio.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { BeneficioService } from '../../../core/services/beneficio.service';
+import { Beneficio } from '../../../core/models/beneficio.model';
 
 @Component({
-  selector: 'app-beneficio-create',
+  selector: 'app-beneficio-edit',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './beneficio-create.html',
-  styleUrls: ['./beneficio-create.scss'],
+  templateUrl: './beneficio-edit.html',
+  styleUrls: ['./beneficio-edit.scss'],
 })
-export class BeneficioCreate {
+export class BeneficioEdit implements OnInit {
   form: FormGroup;
   loading = signal(false);
+  loadingData = signal(true);
   error = signal<string | null>(null);
   success = signal(false);
+  beneficioId!: number;
 
   constructor(
-    private readonly fb: FormBuilder,
-    private readonly service: BeneficioService,
-    private readonly router: Router
+    private fb: FormBuilder,
+    private service: BeneficioService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -31,19 +34,29 @@ export class BeneficioCreate {
     });
   }
 
-  get nameControl() {
-    return this.form.get('name');
+  ngOnInit(): void {
+    this.beneficioId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadBeneficio();
   }
 
-  get descriptionControl() {
-    return this.form.get('description');
+  loadBeneficio(): void {
+    this.service.findById(this.beneficioId).subscribe({
+      next: (beneficio) => {
+        this.form.patchValue(beneficio);
+        this.loadingData.set(false);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar benefício:', err);
+        this.error.set('Erro ao carregar benefício. Redirecionando...');
+        this.loadingData.set(false);
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      }
+    });
   }
 
-  get valueControl() {
-    return this.form.get('value');
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -53,8 +66,9 @@ export class BeneficioCreate {
     this.error.set(null);
 
     const beneficio: Partial<Beneficio> = this.form.value;
+    beneficio.id = this.beneficioId;
 
-    this.service.create(beneficio).subscribe({
+    this.service.update(beneficio).subscribe({
       next: () => {
         this.success.set(true);
         setTimeout(() => {
@@ -63,13 +77,13 @@ export class BeneficioCreate {
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set('Erro ao criar benefício. Tente novamente.');
+        this.error.set('Erro ao atualizar benefício. Tente novamente.');
         console.error('Erro:', err);
       }
     });
   }
 
-  cancel() {
+  cancel(): void {
     this.router.navigate(['/']);
   }
 

@@ -5,7 +5,6 @@ import { Beneficio } from '../models/beneficio.model';
 
 @Injectable({ providedIn: 'root' })
 export class BeneficioService {
-
   private readonly api = 'http://localhost:8080/api/v1/beneficios';
 
   constructor(private readonly http: HttpClient) { }
@@ -14,12 +13,20 @@ export class BeneficioService {
     return this.http.get<Beneficio[]>(this.api);
   }
 
+  findById(id: number): Observable<Beneficio> {
+    return this.http.get<Beneficio>(`${this.api}/${id}`);
+  }
+
   create(beneficio: Partial<Beneficio>): Observable<Beneficio> {
     return this.http.post<Beneficio>(this.api, beneficio);
   }
 
-  update(id: number, beneficio: Partial<Beneficio>): Observable<Beneficio> {
-    return this.http.put<Beneficio>(`${this.api}/${id}`, beneficio);
+  update(beneficio: Partial<Beneficio>): Observable<Beneficio> {
+    return this.http.put<Beneficio>(`${this.api}`, beneficio);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.api}/${id}`);
   }
 
   transfer(fromId: number, toId: number, amount: number): Observable<void> {
