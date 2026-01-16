@@ -32,7 +32,10 @@ public class BeneficioServiceImpl implements BeneficioService{
     @Override
     @Transactional(readOnly = true)
     public BeneficioDTO getOne(Long id) {
-        return beneficioRepository.findById(id).map(beneficioMapper::toBeneficioDTO).orElseThrow(() -> new BeneficioNotFoundException(id));
+        return beneficioRepository
+                .findById(id)
+                .map(beneficioMapper::toBeneficioDTO)
+                .orElseThrow(() -> new BeneficioNotFoundException(id));
     }
 
     @Transactional
@@ -46,7 +49,10 @@ public class BeneficioServiceImpl implements BeneficioService{
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Modifying
     public BeneficioDTO update(UpdateBeneficioDTO dto) {
-        var existingBeneficio = beneficioRepository.findById(dto.id()).orElseThrow(() -> new BeneficioNotFoundException(dto.id()));
+        var existingBeneficio = beneficioRepository
+                .findById(dto.id())
+                .orElseThrow(() -> new BeneficioNotFoundException(dto.id()));
+
         existingBeneficio.setName(dto.name());
         existingBeneficio.setDescription(dto.description());
         existingBeneficio.setValue(dto.value());
@@ -58,7 +64,10 @@ public class BeneficioServiceImpl implements BeneficioService{
     @Modifying
     @Transactional
     public BeneficioDTO partialUpdate(UpdateBeneficioDTO beneficio) {
-        var existingBeneficio = beneficioRepository.findById(beneficio.id()).orElseThrow(() -> new BeneficioNotFoundException(beneficio.id()));
+        var existingBeneficio = beneficioRepository
+                .findById(beneficio.id())
+                .orElseThrow(() -> new BeneficioNotFoundException(beneficio.id()));
+
         if (beneficio.name() != null) {
             existingBeneficio.setName(beneficio.name());
         }

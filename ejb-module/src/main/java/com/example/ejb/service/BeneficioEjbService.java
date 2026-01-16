@@ -71,6 +71,7 @@ public class BeneficioEjbService {
         to.setValue(to.getValue().add(amount));
     }
 
+    // apenas para o teste
     protected void setEntityManager(EntityManager em) {
         this.em = em;
     }
