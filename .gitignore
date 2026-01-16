@@ -1,0 +1,32 @@
+# ======================
+# Java / Maven
+# ======================
+target/
+*.class
+*.log
+/out/
+# ======================
+# IDEs
+# ======================
+.idea/
+*.iml
+.vscode/
+
+# ======================
+# OS
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Node / Angular
+# ======================
+node_modules/
+dist/
+.angular/
+
+# ======================
+# Build específicos
+# ======================
+/backend-module/target/
+/ejb-module/target/

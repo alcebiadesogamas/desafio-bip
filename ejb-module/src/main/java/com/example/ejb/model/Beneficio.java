@@ -1,4 +1,4 @@
-package com.example.backend.model;
+package com.example.ejb.model;
 
 import jakarta.persistence.*;
 
@@ -25,6 +25,7 @@ public class Beneficio {
     @Column(name = "ativo")
     private Boolean active;
 
+    @Version
     @Column(name = "version")
     private Long version;
 
