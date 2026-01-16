@@ -7,18 +7,18 @@ import { BeneficioService } from '../../../core/services/beneficio.service';
 @Component({
   selector: 'app-beneficio-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './beneficio-list.html',
   styleUrls: ['./beneficio-list.scss'],
 })
 export class BeneficioList implements OnInit {
   beneficios = signal<Beneficio[]>([]);
   loading = signal(true);
-  
+
   showDeleteModal = signal(false);
   beneficioToDelete = signal<Beneficio | null>(null);
   deleting = signal(false);
-  
+
   message = signal<string | null>(null);
   messageType = signal<'success' | 'error'>('success');
 
@@ -26,7 +26,7 @@ export class BeneficioList implements OnInit {
     private readonly service: BeneficioService,
     private readonly cdr: ChangeDetectorRef,
     private readonly router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadBeneficios();
@@ -85,7 +85,7 @@ export class BeneficioList implements OnInit {
   showMessage(msg: string, type: 'success' | 'error'): void {
     this.message.set(msg);
     this.messageType.set(type);
-    
+
     setTimeout(() => {
       this.message.set(null);
     }, 5000);

@@ -3,190 +3,188 @@
     <!-- Header -->
     <header class="transfer-header">
       <div class="header-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <polyline points="19 12 12 19 5 12"></polyline>
         </svg>
       </div>
+      <button class="btn-back" (click)="cancel()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Voltar
+      </button>
       <h1>Transferência de Benefícios</h1>
       <p class="subtitle">Transfira valores entre seus benefícios de forma rápida e segura</p>
     </header>
 
     <!-- Messages -->
     @if (message()) {
-      <div class="alert" [class.alert-success]="messageType() === 'success'" [class.alert-error]="messageType() === 'error'">
-        @if (messageType() === 'success') {
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-        } @else {
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="15" y1="9" x2="9" y2="15"></line>
-            <line x1="9" y1="9" x2="15" y2="15"></line>
-          </svg>
-        }
-        <span>{{ message() }}</span>
-      </div>
+    <div class="alert" [class.alert-success]="messageType() === 'success'"
+      [class.alert-error]="messageType() === 'error'">
+      @if (messageType() === 'success') {
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      } @else {
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+      }
+      <span>{{ message() }}</span>
+    </div>
     }
 
     <!-- Loading State -->
     @if (loadingBeneficios()) {
-      <div class="loading-state">
-        <div class="spinner"></div>
-        <p>Carregando benefícios...</p>
-      </div>
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Carregando benefícios...</p>
+    </div>
     } @else {
-      <!-- Transfer Form -->
-      <form [formGroup]="benefitFormGroup" (ngSubmit)="transfer()" class="transfer-form">
-        
-        <!-- From Card -->
-        <div class="transfer-card">
-          <div class="card-label">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-            De (Origem)
-          </div>
-          
-          <div class="form-group">
-            <select 
-              formControlName="fromId" 
-              class="form-select"
-              [class.error]="hasError('fromId')"
-            >
-              <option value="">Selecione o benefício de origem</option>
-              @for (b of beneficios(); track b.id) {
-                <option [value]="b.id">{{ b.name }} - {{ b.value | currency:'BRL' }}</option>
-              }
-            </select>
-            @if (hasError('fromId')) {
-              <span class="error-message">{{ getErrorMessage('fromId') }}</span>
-            }
-          </div>
+    <!-- Transfer Form -->
+    <form [formGroup]="benefitFormGroup" (ngSubmit)="transfer()" class="transfer-form">
 
-          @if (beneficioOrigem()) {
-            <div class="benefit-preview">
-              <div class="preview-info">
-                <span class="preview-label">Saldo Disponível</span>
-                <span class="preview-value">{{ beneficioOrigem()!.value | currency:'BRL' }}</span>
-              </div>
-              <div class="preview-description">{{ beneficioOrigem()!.description }}</div>
-            </div>
-          }
-        </div>
-
-        <!-- Transfer Arrow -->
-        <div class="transfer-arrow">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <polyline points="19 12 12 19 5 12"></polyline>
+      <!-- From Card -->
+      <div class="transfer-card">
+        <div class="card-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
+          De (Origem)
         </div>
 
-        <!-- Amount Card -->
-        <div class="transfer-card amount-card">
-          <div class="card-label">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-            Valor da Transferência
-          </div>
-          
-          <div class="form-group">
-            <div class="input-with-icon">
-              <span class="input-icon">R$</span>
-              <input
-                type="number"
-                formControlName="amount"
-                class="form-input with-icon amount-input"
-                [class.error]="hasError('amount')"
-                placeholder="0,00"
-                step="0.01"
-                min="0"
-              />
-            </div>
-            @if (hasError('amount')) {
-              <span class="error-message">{{ getErrorMessage('amount') }}</span>
+        <div class="form-group">
+          <select formControlName="fromId" class="form-select" [class.error]="hasError('fromId')">
+            <option value="">Selecione o benefício de origem</option>
+            @for (b of beneficios(); track b.id) {
+            <option [value]="b.id">{{ b.name }} - {{ b.value | currency:'BRL' }}</option>
             }
-          </div>
-        </div>
-
-        <!-- To Card -->
-        <div class="transfer-card">
-          <div class="card-label">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-            Para (Destino)
-          </div>
-          
-          <div class="form-group">
-            <select 
-              formControlName="toId" 
-              class="form-select"
-              [class.error]="hasError('toId')"
-            >
-              <option value="">Selecione o benefício de destino</option>
-              @for (b of beneficios(); track b.id) {
-                <option [value]="b.id">{{ b.name }} - {{ b.value | currency:'BRL' }}</option>
-              }
-            </select>
-            @if (hasError('toId')) {
-              <span class="error-message">{{ getErrorMessage('toId') }}</span>
-            }
-          </div>
-
-          @if (beneficioDestino()) {
-            <div class="benefit-preview">
-              <div class="preview-info">
-                <span class="preview-label">Saldo Atual</span>
-                <span class="preview-value">{{ beneficioDestino()!.value | currency:'BRL' }}</span>
-              </div>
-              <div class="preview-description">{{ beneficioDestino()!.description }}</div>
-            </div>
+          </select>
+          @if (hasError('fromId')) {
+          <span class="error-message">{{ getErrorMessage('fromId') }}</span>
           }
         </div>
 
-        <!-- Summary -->
-        @if (beneficioOrigem() && beneficioDestino() && benefitFormGroup.get('amount')?.value > 0) {
-          <div class="transfer-summary">
-            <h3>Resumo da Transferência</h3>
-            <div class="summary-row">
-              <span>De:</span>
-              <strong>{{ beneficioOrigem()!.name }}</strong>
-            </div>
-            <div class="summary-row">
-              <span>Para:</span>
-              <strong>{{ beneficioDestino()!.name }}</strong>
-            </div>
-            <div class="summary-row highlight">
-              <span>Valor:</span>
-              <strong>{{ benefitFormGroup.get('amount')?.value | currency:'BRL' }}</strong>
-            </div>
+        @if (beneficioOrigem()) {
+        <div class="benefit-preview">
+          <div class="preview-info">
+            <span class="preview-label">Saldo Disponível</span>
+            <span class="preview-value">{{ beneficioOrigem()!.value | currency:'BRL' }}</span>
           </div>
-        }
-
-        <!-- Actions -->
-        <div class="form-actions">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="loading() || benefitFormGroup.invalid"
-          >
-            @if (loading()) {
-              <div class="spinner-small"></div>
-              Processando...
-            } @else {
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              Confirmar Transferência
-            }
-          </button>
+          <div class="preview-description">{{ beneficioOrigem()!.description }}</div>
         </div>
-      </form>
+        }
+      </div>
+
+      <!-- Transfer Arrow -->
+      <div class="transfer-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <polyline points="19 12 12 19 5 12"></polyline>
+        </svg>
+      </div>
+
+      <!-- Amount Card -->
+      <div class="transfer-card amount-card">
+        <div class="card-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          Valor da Transferência
+        </div>
+
+        <div class="form-group">
+          <div class="input-with-icon">
+            <span class="input-icon">R$</span>
+            <input type="number" formControlName="amount" class="form-input with-icon amount-input"
+              [class.error]="hasError('amount')" placeholder="0,00" step="0.01" min="0" />
+          </div>
+          @if (hasError('amount')) {
+          <span class="error-message">{{ getErrorMessage('amount') }}</span>
+          }
+        </div>
+      </div>
+
+      <!-- To Card -->
+      <div class="transfer-card">
+        <div class="card-label">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          Para (Destino)
+        </div>
+
+        <div class="form-group">
+          <select formControlName="toId" class="form-select" [class.error]="hasError('toId')">
+            <option value="">Selecione o benefício de destino</option>
+            @for (b of beneficios(); track b.id) {
+            <option [value]="b.id">{{ b.name }} - {{ b.value | currency:'BRL' }}</option>
+            }
+          </select>
+          @if (hasError('toId')) {
+          <span class="error-message">{{ getErrorMessage('toId') }}</span>
+          }
+        </div>
+
+        @if (beneficioDestino()) {
+        <div class="benefit-preview">
+          <div class="preview-info">
+            <span class="preview-label">Saldo Atual</span>
+            <span class="preview-value">{{ beneficioDestino()!.value | currency:'BRL' }}</span>
+          </div>
+          <div class="preview-description">{{ beneficioDestino()!.description }}</div>
+        </div>
+        }
+      </div>
+
+      <!-- Summary -->
+      @if (beneficioOrigem() && beneficioDestino() && benefitFormGroup.get('amount')?.value > 0) {
+      <div class="transfer-summary">
+        <h3>Resumo da Transferência</h3>
+        <div class="summary-row">
+          <span>De:</span>
+          <strong>{{ beneficioOrigem()!.name }}</strong>
+        </div>
+        <div class="summary-row">
+          <span>Para:</span>
+          <strong>{{ beneficioDestino()!.name }}</strong>
+        </div>
+        <div class="summary-row highlight">
+          <span>Valor:</span>
+          <strong>{{ benefitFormGroup.get('amount')?.value | currency:'BRL' }}</strong>
+        </div>
+      </div>
+      }
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="loading() || benefitFormGroup.invalid">
+          @if (loading()) {
+          <div class="spinner-small"></div>
+          Processando...
+          } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          Confirmar Transferência
+          }
+        </button>
+      </div>
+    </form>
     }
   </div>
 </div>

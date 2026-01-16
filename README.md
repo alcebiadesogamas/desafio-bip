@@ -12,7 +12,7 @@ A arquitetura proposta e a seguinte:
   - - Service Layer
   - - Controller Layer
   - - Repository Layer
-  - Banco de Dados H2
+  - Banco de Dados H2 (Obs: não utilizei banco de dados externo para facilitar a execução do projeto)
 
 - EJB
   - Implementado como uma lib (supondo que o mesmo fosse disponibilizado por uma aplicacao com WildFly ou outro servico) externa

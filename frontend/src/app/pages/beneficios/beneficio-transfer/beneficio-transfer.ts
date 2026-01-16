@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Beneficio } from '../../../core/models/beneficio.model';
 import { BeneficioService } from '../../../core/services/beneficio.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,13 +20,14 @@ export class BeneficioTransfer implements OnInit {
   loadingBeneficios = signal(true);
   message = signal<string | null>(null);
   messageType = signal<'success' | 'error'>('success');
-  
+
   beneficioOrigem = signal<Beneficio | null>(null);
   beneficioDestino = signal<Beneficio | null>(null);
 
   constructor(
-    private fb: FormBuilder,
-    private service: BeneficioService
+    private readonly fb: FormBuilder,
+    private readonly service: BeneficioService,
+    private readonly router: Router
   ) {
     this.benefitFormGroup = this.fb.group({
       fromId: ['', [Validators.required]],
@@ -33,7 +35,6 @@ export class BeneficioTransfer implements OnInit {
       amount: [0, [Validators.required, Validators.min(0.01)]]
     });
 
-    // Observa mudanças nos selects
     this.benefitFormGroup.get('fromId')?.valueChanges.subscribe(id => {
       this.beneficioOrigem.set(
         this.beneficios().find(b => b.id === Number(id)) || null
@@ -87,7 +88,7 @@ export class BeneficioTransfer implements OnInit {
         this.benefitFormGroup.reset();
         this.beneficioOrigem.set(null);
         this.beneficioDestino.set(null);
-        this.loadBeneficios(); // Recarrega para atualizar valores
+        this.loadBeneficios(); 
         this.loading.set(false);
       },
       error: (err) => {
@@ -104,7 +105,7 @@ export class BeneficioTransfer implements OnInit {
   showMessage(msg: string, type: 'success' | 'error'): void {
     this.message.set(msg);
     this.messageType.set(type);
-    
+
     setTimeout(() => {
       this.message.set(null);
     }, 5000);
@@ -121,7 +122,11 @@ export class BeneficioTransfer implements OnInit {
 
     if (control.errors['required']) return 'Este campo é obrigatório';
     if (control.errors['min']) return 'O valor deve ser maior que zero';
-    
+
     return '';
+  }
+
+  cancel(): void {
+    this.router.navigate(['/']);
   }
 }

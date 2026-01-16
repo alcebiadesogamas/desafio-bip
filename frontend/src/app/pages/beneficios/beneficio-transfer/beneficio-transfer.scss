@@ -501,3 +501,29 @@ $radius-xs: 8px;
     font-size: 1.1rem;
   }
 }
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid $border-color;
+    border-radius: $radius-xs;
+    color: $text-gray;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+        background: $bg-gray;
+        border-color: $primary-color;
+        color: $primary-color;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
