@@ -14,7 +14,6 @@ $radius: 16px;
 $radius-sm: 12px;
 $radius-xs: 8px;
 
-// Mixins
 @mixin card-shadow {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -23,7 +22,6 @@ $radius-xs: 8px;
   transition: $property 0.3s ease;
 }
 
-// Container
 .transfer-container {
   min-height: 100vh;
   background: $primary-gradient;
@@ -50,7 +48,6 @@ $radius-xs: 8px;
   }
 }
 
-// Header
 .transfer-header {
   background: $bg-white;
   border-radius: $radius;
@@ -94,7 +91,6 @@ $radius-xs: 8px;
   50% { transform: translateY(-5px); }
 }
 
-// Alerts
 .alert {
   display: flex;
   align-items: center;
@@ -135,7 +131,6 @@ $radius-xs: 8px;
   }
 }
 
-// Loading
 .loading-state {
   display: flex;
   flex-direction: column;
@@ -167,7 +162,6 @@ $radius-xs: 8px;
   100% { transform: rotate(360deg); }
 }
 
-// Form
 .transfer-form {
   background: $bg-white;
   border-radius: $radius;
@@ -178,7 +172,6 @@ $radius-xs: 8px;
   gap: 1.5rem;
 }
 
-// Transfer Cards
 .transfer-card {
   padding: 1.5rem;
   background: $bg-gray;
@@ -214,7 +207,6 @@ $radius-xs: 8px;
   }
 }
 
-// Form Elements
 .form-group {
   display: flex;
   flex-direction: column;
@@ -257,7 +249,6 @@ $radius-xs: 8px;
   padding-right: 3rem;
 }
 
-// Input with icon
 .input-with-icon {
   position: relative;
   display: flex;
@@ -285,7 +276,6 @@ $radius-xs: 8px;
   color: $primary-color;
 }
 
-// Error message
 .error-message {
   font-size: 0.875rem;
   color: $error-color;
@@ -301,7 +291,6 @@ $radius-xs: 8px;
   75% { transform: translateX(5px); }
 }
 
-// Benefit Preview
 .benefit-preview {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -342,7 +331,6 @@ $radius-xs: 8px;
   to { opacity: 1; }
 }
 
-// Transfer Arrow
 .transfer-arrow {
   display: flex;
   align-items: center;
@@ -361,7 +349,6 @@ $radius-xs: 8px;
   50% { transform: translateY(10px); }
 }
 
-// Transfer Summary
 .transfer-summary {
   padding: 1.5rem;
   background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
@@ -415,7 +402,6 @@ $radius-xs: 8px;
   }
 }
 
-// Buttons
 .form-actions {
   display: flex;
   margin-top: 0.5rem;
