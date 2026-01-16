@@ -9,7 +9,7 @@
         <groupId>com.example</groupId>
         <artifactId>root-project</artifactId>
         <version>1.0.0</version>
-        <relativePath>../pom.xml</relativePath> <!-- IMPORTANTE -->
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
 

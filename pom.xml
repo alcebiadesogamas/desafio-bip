@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>root-project</artifactId>
+    <artifactId>desafio-bip</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 

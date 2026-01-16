@@ -15,7 +15,7 @@ import com.example.ejb.service.exception.InvalidAmountException;
 import jakarta.transaction.Transactional;
 
 @Stateless
-public class BeneficioEjbService implements BeneficioEjbServiceRemote {
+public class BeneficioEjbService {
 
     @PersistenceContext
     private EntityManager em;
@@ -71,7 +71,7 @@ public class BeneficioEjbService implements BeneficioEjbServiceRemote {
         to.setValue(to.getValue().add(amount));
     }
 
-    public void setEntityManager(EntityManager em) {
+    protected void setEntityManager(EntityManager em) {
         this.em = em;
     }
 }
