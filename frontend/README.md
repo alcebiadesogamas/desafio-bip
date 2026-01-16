@@ -15,7 +15,7 @@ cd desafio-bip.git
 npm install
 ng serve
 ```
-
+- Em seguida, basta acessar http://localhost:4200 para visualizar a aplicacao no navegador.
 Operações:
   - 1 - listagem de benefícios (Pagina principal)
   - 2 - cadastro de benefícios (Pagina de cadastro)
