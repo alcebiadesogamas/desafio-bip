@@ -22,8 +22,8 @@ public class BeneficioController {
     }
 
     @GetMapping
-    public List<String> list() {
-        return beneficioService.getAll().stream().map(BeneficioDTO::name).toList();
+    public List<BeneficioDTO> list() {
+        return beneficioService.getAll();
     }
 
     @GetMapping("/{id}")

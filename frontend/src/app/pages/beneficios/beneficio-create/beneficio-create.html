@@ -1,0 +1,150 @@
+<div class="form-container">
+  <div class="form-wrapper">
+    <!-- Header -->
+    <header class="form-header">
+      <button class="btn-back" (click)="cancel()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Voltar
+      </button>
+      <h1>Novo Benefício</h1>
+      <p class="subtitle">Preencha os dados abaixo para criar um novo benefício</p>
+    </header>
+
+    <!-- Success Message -->
+    @if (success()) {
+      <div class="alert alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <div>
+          <strong>Sucesso!</strong>
+          <p>Benefício criado com sucesso. Redirecionando...</p>
+        </div>
+      </div>
+    }
+
+    <!-- Error Message -->
+    @if (error()) {
+      <div class="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="15" y1="9" x2="9" y2="15"></line>
+          <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+        <div>
+          <strong>Erro!</strong>
+          <p>{{ error() }}</p>
+        </div>
+      </div>
+    }
+
+    <!-- Form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+      <!-- Nome -->
+      <div class="form-group">
+        <label for="name" class="form-label">
+          Nome do Benefício
+          <span class="required">*</span>
+        </label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="form-input"
+          [class.error]="hasError('name')"
+          placeholder="Ex: Vale Alimentação"
+        />
+        @if (hasError('name')) {
+          <span class="error-message">{{ getErrorMessage('name') }}</span>
+        }
+      </div>
+
+      <!-- Descrição -->
+      <div class="form-group">
+        <label for="description" class="form-label">
+          Descrição
+          <span class="required">*</span>
+        </label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-textarea"
+          [class.error]="hasError('description')"
+          placeholder="Descreva os detalhes do benefício..."
+          rows="4"
+        ></textarea>
+        @if (hasError('description')) {
+          <span class="error-message">{{ getErrorMessage('description') }}</span>
+        }
+      </div>
+
+      <!-- Valor -->
+      <div class="form-group">
+        <label for="value" class="form-label">
+          Valor (R$)
+          <span class="required">*</span>
+        </label>
+        <div class="input-with-icon">
+          <span class="input-icon">R$</span>
+          <input
+            id="value"
+            type="number"
+            formControlName="value"
+            class="form-input with-icon"
+            [class.error]="hasError('value')"
+            placeholder="0,00"
+            step="0.01"
+            min="0"
+          />
+        </div>
+        @if (hasError('value')) {
+          <span class="error-message">{{ getErrorMessage('value') }}</span>
+        }
+      </div>
+
+      <!-- Status -->
+      <div class="form-group">
+        <label class="toggle-label">
+          <input
+            type="checkbox"
+            formControlName="active"
+            class="toggle-input"
+          />
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">Benefício Ativo</span>
+        </label>
+        <p class="form-hint">Benefícios ativos aparecem para os usuários</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()"
+          [disabled]="loading()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading() || form.invalid"
+        >
+          @if (loading()) {
+            <div class="spinner-small"></div>
+            Salvando...
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Criar Benefício
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
